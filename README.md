@@ -1,8 +1,13 @@
 # TodoMVC with EdgeDB and Next.js
 
-## The stack
+## The branches
 
-This project implements the standard [TodoMVC](https://todomvc.com/) project with Next.js and EdgeDB.
+- `main` — the completed version of the app
+- `incomplete` — the incomplete version of the app
+
+## Get started
+
+- git clone
 
 - TypeScript
 - React
@@ -12,22 +17,27 @@ This project implements the standard [TodoMVC](https://todomvc.com/) project wit
 - [react-query](https://github.com/tannerlinsley/react-query) for fetching
 - [Axios](https://github.com/axios/axios) for HTTP
 
-### Getting started
-
-If you aren't famililar with EdgeDB, check out the [Quickstart](https://www.edgedb.com/docs/tutorial/index) first. It will walk you through how to install EdgeDB, set up an instance, and write some simple queries.
-
-### Download the starter project
-
-This uses a utility called `degit` that downloads a copy of the project from GitHub without cloning it:
+### Clone the repo
 
 ```sh
-cd ~/Documents
-npx degit edgedb/edgedb-examples/nextjs-todomvc todomvc
-cd todomvc
-npm install # install dependencies
+$ git clone git@github.com:edgedb/simpletodo.git
+$ cd simpletodo
+$ yarn
 ```
 
 ### Initialize the project
+
+Install the `edgedb` CLI if you haven't already
+
+```bash
+# macOS/Linux
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.edgedb.com | sh
+
+# Windows
+PS> iwr https://ps1.edgedb.com -useb | iex
+```
+
+Then initialize the project. Run the following command from the project root.
 
 ```bash
 $ edgedb project init
