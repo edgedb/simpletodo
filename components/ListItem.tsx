@@ -26,7 +26,7 @@ export function ListItem({
           onChange={async (e) => {
             const checked = e.currentTarget.checked;
             setCompleted(checked);
-
+            console.log(task);
             await toggleTask(task.id, {onError: () => setCompleted(!checked)});
           }}
         />

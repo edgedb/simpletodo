@@ -1,4 +1,9 @@
+import {createClient} from 'edgedb';
 import {NextApiRequest, NextApiResponse} from 'next';
+
+import e from '../../../dbschema/edgeql-js';
+
+const client = createClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Three endpoints:
@@ -14,16 +19,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   ///   GET /api/todo   ///
   /////////////////////////
   if (!id && req.method === 'GET') {
-    //  select Task {
+    //  select Todo {
     //    id,
     //    title,
     //    completed
     //  };
-    return res.status(200).json([
-      {id: 'aaa', title: 'Introduce the event', completed: false},
-      {id: 'bbb', title: 'Do live demo', completed: false},
-      {id: 'ccc', title: 'Give ORMs talk', completed: false},
-    ]);
+    const query = e.select(e.Todo, (todo) => ({
+      id: true,
+      title: true,
+      upper_title: e.str_upper(todo.title),
+    }));
+    const result = await query.run(client);
+    return res.status(200).json(result);
   }
 
   //////////////////////////
@@ -34,7 +41,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     //  insert Task {
     //    title := <str>$title
     //  };
-    return res.status(500).send('Not implemented!');
+    const query = e.insert(e.Todo, {
+      title: req.body.title as string,
+    });
+
+    await query.run(client);
+
+    return res.status(200).send('Success');
   }
 
   //////////////////////////////
@@ -42,10 +55,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   //////////////////////////////
   // req.query { id: string }
   if (req.method === 'PATCH' && !!id) {
-    //  update Task
+    //  update Todo
     //  filter .id = req.query.id
     //  set { completed := not .completed };
-    return res.status(500).send('Not implemented!');
+    const query = e.update(e.Todo, (todo) => ({
+      filter: e.op(todo.id, '=', e.uuid(id)),
+      set: {
+        completed: e.op('not', todo.completed),
+      },
+    }));
+    await query.run(client);
+    return res.status(200).send('Success');
   }
 
   return res.status(400).send('Invalid request');
