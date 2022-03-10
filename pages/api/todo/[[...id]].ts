@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const query = e.select(e.Todo, (todo) => ({
       id: true,
       title: true,
-      upper_title: e.str_upper(todo.title),
+      completed: true,
     }));
     const result = await query.run(client);
     return res.status(200).json(result);
