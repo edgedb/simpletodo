@@ -3,9 +3,9 @@
   "version": "5.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p ${PORT:=3000}",
+    "dev": "next dev -p ${PORT:-3000}",
     "build": "next build",
-    "start": "next start -p ${PORT:=3000}"
+    "start": "next start -p ${PORT:-3000}"
   },
   "dependencies": {
     "axios": "^0.21.1",
