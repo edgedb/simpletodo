@@ -51,6 +51,14 @@ This does a few things:
 
 The database is now fully configured and ready for use!
 
+### Generate TypeScript query builder files
+Auto-generate the TypeScript query builder files based on the current schema:
+
+```bash
+$ npx edgeql-js           # npm users
+$ yarn edgeql-js          # yarn users
+```
+
 ### Start the server
 
 Start the server.
