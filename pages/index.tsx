@@ -8,8 +8,6 @@ import {useState} from 'react';
 import {useMutation, useQuery} from 'react-query';
 import {ReactQueryDevtools} from 'react-query/devtools';
 
-import {ListItem} from '../components/ListItem';
-
 export type Task = {
   id: string;
   title: string;
@@ -20,8 +18,9 @@ export type Task = {
 const onError = (err: AxiosError) => {
   alert(err?.response?.data);
 };
+
 export default function TodosPage() {
-  const allTasks = useQuery<Task[]>('todos', () =>
+  const allTasks = useQuery<Task[]>(['todos'], () =>
     axios.get('/api/todo').then((res) => res.data)
   );
   const refetchTasks = allTasks.refetch as () => void;
@@ -87,11 +86,20 @@ export default function TodosPage() {
             {/* These are here just to show the structure of the list items */}
             {/* List items should get the class `editing` when editing and `completed` when marked as completed */}
             {filteredTasks.map((task) => (
-              <ListItem
-                key={task.id}
-                task={task}
-                toggleTask={toggleTask.mutate}
-              />
+              <li key={task.id} className={clsx(task.completed && 'completed')}>
+                <div className="view">
+                  <input
+                    className="toggle"
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={async (e) => {
+                      // const checked = e.currentTarget.checked;
+                      await toggleTask.mutate(task.id);
+                    }}
+                  />
+                  <label>{task.title}</label>
+                </div>
+              </li>
             ))}
           </ul>
         </section>
