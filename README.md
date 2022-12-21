@@ -12,7 +12,7 @@
 - TypeScript
 - React
 - Next.js
-- [EdgeDB](https://edgedb.com/) (1-beta.2)
+- [EdgeDB](https://edgedb.com/)
 - The `edgedb` NPM module ([docs](https://www.edgedb.com/docs/clients/01_js/index/))
 - [react-query](https://github.com/tannerlinsley/react-query) for fetching
 - [Axios](https://github.com/axios/axios) for HTTP
@@ -31,7 +31,7 @@ Install the `edgedb` CLI if you haven't already
 
 ```bash
 # macOS/Linux
-$ curl --proto '=https' --tlsv1.2 -sSf https://sh.edgedb.com | sh
+$ curl https://sh.edgedb.com --proto '=https' -sSf1 | sh
 
 # Windows
 PS> iwr https://ps1.edgedb.com -useb | iex
